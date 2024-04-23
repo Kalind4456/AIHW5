@@ -23,16 +23,22 @@ public class Regression {
         return sum;
     }
 
-    public double[] regression_model(double[] weights, ArrayList<HashMap<Integer, Integer>> bigX, int[] label, int learning_rate){
+    public double[] regression_model(double[] weights, ArrayList<HashMap<Integer, Integer>> bigX, ArrayList<Integer> labels, double learning_rate) {
         int n = bigX.size();
-        for(int i = 0; i < n; i ++){
-            int[] smallXArray = new int[124];
-            for (int j = 1; j < 124; j++){
-                smallXArray[j] = bigX.get(i).get(j);
+        for (int i = 0; i < n; i++) {
+            int[] smallXArray = new int[124]; // Assuming 124 features (adjust accordingly)
+            HashMap<Integer, Integer> features = bigX.get(i);
+            for (int j = 0; j < 124; j++) {
+                smallXArray[j] = features.getOrDefault(j, 0);
             }
 
-            for(int j = 1; j < weights.length; j++) {
-                weights[j] += learning_rate * sigmoid(dot_product(smallXArray, weights)) * smallXArray[j];
+            double predicted = sigmoid(labels.get(i) * dot_product(smallXArray, weights));
+            double error = (1 - predicted) * labels.get(i);
+
+            for (int j = 0; j < weights.length; j++) {
+                if (features.containsKey(j)) {
+                    weights[j] += learning_rate * error * smallXArray[j];
+                }
             }
         }
         return weights;

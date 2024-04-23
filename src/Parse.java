@@ -11,8 +11,6 @@ public class Parse {
                 labels.add(line.charAt(0) == '-' ? -1 : 1);
                 line = reader.readLine();
             }
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -40,8 +38,6 @@ public class Parse {
                 }
                 bigX.add(features);  // Add the map for this line to the list
             }
-        }catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -30,6 +30,7 @@ public class Main {
         Regression regression = new Regression();
         double[] weights = new double[124];  // Initialize weights, assuming 124 features including a bias if necessary
 
+        ArrayList<Double> accuracies = new ArrayList<>();
         // Train the model
         for (int i = 0; i < iterations; i++) {
             weights = regression.regression_model(weights, trainFeatures, trainLabels, learningRate);
@@ -44,7 +45,11 @@ public class Main {
 
             System.out.format("Iteration %d: TRAIN accuracy %.3f xent %.3f   TEST accuracy %.3f xent %.3f%n",
                     i+1, trainAccuracy, trainXent, testAccuracy, testXent);
+            accuracies.add(trainAccuracy);
         }
+        for (Double acc:
+             accuracies)
+            System.out.println(acc);
     }
 
     private static double calculateAccuracy(ArrayList<HashMap<Integer, Integer>> features, ArrayList<Integer> labels, double[] weights) {
